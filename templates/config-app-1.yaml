@@ -1,10 +1,29 @@
-apiVersion: v1
-kind: Service
+apiVersion: argoproj.io/v1alpha1
+kind: Application
 metadata:
-  name: guestbook-ui
+  name: config-app-1
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io/foreground
 spec:
-  ports:
-  - port: 80
-    targetPort: 80
-  selector:
-    app: guestbook-ui
+  project: default
+  source:
+    path: config
+    repoURL: https://github.com/testcodefresh/cf-e2e-rl-flow.git
+    targetRevision: HEAD
+  destination:
+    name: in-cluster
+    namespace: test-ns-1
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: true
+    syncOptions:
+      - PrunePropagationPolicy=foreground
+      - Replace=false
+      - PruneLast=false
+      - Validate=true
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=false
+      - ServerSideApply=true
+      - RespectIgnoreDifferences=false
