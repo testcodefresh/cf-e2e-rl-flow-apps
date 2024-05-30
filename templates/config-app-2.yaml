@@ -8,7 +8,7 @@ spec:
   project: default
   source:
     path: config
-    repoURL: https://github.com/testcodefresh/cf-e2e-rl-flow.git
+    repoURL: https://github.com/testcodefresh/cf-e2e-rl-flow-apps.git
     targetRevision: HEAD
   destination:
     name: in-cluster
